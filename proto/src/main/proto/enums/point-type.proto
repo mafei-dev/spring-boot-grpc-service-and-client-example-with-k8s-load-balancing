@@ -1,0 +1,9 @@
+syntax = "proto3";
+option java_multiple_files = true;
+package enums;
+option java_package = "com.example.pointservice.stub.enums";
+
+enum Reason{
+  CREDIT_CARD_PAYMENT = 0 ;
+  SELLER_OFFER = 1;
+}

@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/proto.iml" filepath="$PROJECT_DIR$/proto.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-bbot-grcp-service-and-client-example.iml" filepath="$PROJECT_DIR$/spring-bbot-grcp-service-and-client-example.iml" />
     </modules>
   </component>

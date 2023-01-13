@@ -1,0 +1,27 @@
+syntax = "proto3";
+import "enums/point-type.proto";
+option java_multiple_files = true;
+option java_package = "com.example.pointservice.stub";
+
+message IncreasePointRequestBody{
+  string username = 1;
+  int32 amount = 2;
+  enums.Reason reason = 3;
+}
+
+message IncreasePointResponseBody{
+  int32 lastUpdatedPoint = 1;
+}
+
+
+message GetPointRequestBody{
+  string username = 1;
+}
+message GetPointResponseBody{
+  int32 lastUpdatedPoint = 1;
+}
+
+service PointService {
+  rpc increasePoint(IncreasePointRequestBody)returns(IncreasePointResponseBody);
+  rpc getPoints(GetPointRequestBody) returns (GetPointResponseBody);
+}

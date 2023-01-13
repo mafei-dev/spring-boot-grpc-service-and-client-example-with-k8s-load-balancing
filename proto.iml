@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$/proto">
+      <sourceFolder url="file://$MODULE_DIR$/proto/src/main/proto" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/proto/target/generated-sources/protobuf/grpc-java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/proto/target/generated-sources/protobuf/grpc-java/com/example/grpc" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/proto/target/generated-sources/protobuf/grpc-java/com/example/userpointservice/grpc" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/proto/target/generated-sources/protobuf/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/proto/target/generated-sources/protobuf/java/com/example/grpc" isTestSource="false" />
+    </content>
+  </component>
+</module>
