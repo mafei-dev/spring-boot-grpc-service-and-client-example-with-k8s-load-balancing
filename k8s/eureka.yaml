@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: eureka-server-deployment
+  labels:
+    app: eureka-server
+spec:
+  serviceName: "eureka"
+  selector:
+    matchLabels:
+      app: eureka-server
+  template:
+    metadata:
+      labels:
+        app: eureka-server
+    spec:
+      containers:
+        - name: eureka-server
+          image: mafeidev/grpc-spring-lb-eureka:1.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8085
+          env:
+            - name: DEFAULT_ZONE
+              value: http://eureka-server-deployment-0.eureka.default.svc.cluster.local:8085/eureka
+
+            - name: SPRING_PROFILES_ACTIVE
+              value: k8s
+            - name: PREFER_IP_ADDRESS
+              value: "false"
+            - name: EUREKA_INSTANCE_HOSTNAME
+              value: eureka-service
+            - name: MY_NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: MY_POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: eureka
+  labels:
+    app: eureka
+spec:
+  clusterIP: None
+  ports:
+    - port: 8085
+      name: eureka
+  selector:
+    app: eureka-server

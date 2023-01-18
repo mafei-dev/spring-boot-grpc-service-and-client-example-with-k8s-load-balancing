@@ -11,15 +11,24 @@ import com.example.service.repository.UserPointRepository;
 import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
-import lombok.AllArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.transaction.annotation.Transactional;
 
-@AllArgsConstructor
 @GrpcService
 public class UserPointService extends PointServiceGrpc.PointServiceImplBase {
     private final UserPointRepository userPointRepository;
     private final UserPointHistoryRepository userPointHistoryRepository;
+    @Value("${grpc.server.port}")
+    private String port;
+    @Value("${info.app.host_name}")
+    private String hostName;
+
+    public UserPointService(UserPointRepository userPointRepository, UserPointHistoryRepository userPointHistoryRepository) {
+        this.userPointRepository = userPointRepository;
+        this.userPointHistoryRepository = userPointHistoryRepository;
+    }
+
 
     @Override
     @Transactional
@@ -55,8 +64,11 @@ public class UserPointService extends PointServiceGrpc.PointServiceImplBase {
                             .build()
             );
             int lastPoints = this.userPointRepository.findByUsername(request.getUsername()).get().getPoints();
+            String lastp = lastPoints + " from [server:" + port + ",host:" + hostName + "]";
             responseObserver.onNext(
-                    IncreasePointResponseBody.newBuilder().setLastUpdatedPoint(lastPoints).build()
+                    IncreasePointResponseBody.newBuilder()
+                            .setLastUpdatedPoint(lastp)
+                            .build()
             );
             responseObserver.onCompleted();
         } catch (RuntimeException e) {

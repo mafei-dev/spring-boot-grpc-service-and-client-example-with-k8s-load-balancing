@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-grpc-client
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: sample-grpc-client
+  template:
+    metadata:
+      labels:
+        app: sample-grpc-client
+    spec:
+      containers:
+        - name: sample-grpc-client
+          image: mafeidev/grpc-spring-lb-client:1.0.5
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DEFAULT_ZONE
+              value: http://eureka-server-deployment-0.eureka.default.svc.cluster.local:8085/eureka
+            - name: SPRING_PROFILES_ACTIVE
+              value: k8s
+            - name: GRPC_SERVER_ADDRESS
+#              value: discovery:///grpc-server
+              value: dns:///grpc-server:9090
+            - name: MY_NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: MY_POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sample-grpc-client
+spec:
+  selector:
+    app: sample-grpc-client
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080

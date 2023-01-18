@@ -10,7 +10,7 @@ message IncreasePointRequestBody{
 }
 
 message IncreasePointResponseBody{
-  int32 lastUpdatedPoint = 1;
+  string lastUpdatedPoint = 2;
 }
 
 

@@ -47,7 +47,7 @@ public final class PointServiceOuterClass {
       "proto\"[\n\030IncreasePointRequestBody\022\020\n\010use" +
       "rname\030\001 \001(\t\022\016\n\006amount\030\002 \001(\005\022\035\n\006reason\030\003 " +
       "\001(\0162\r.enums.Reason\"5\n\031IncreasePointRespo" +
-      "nseBody\022\030\n\020lastUpdatedPoint\030\001 \001(\005\"\'\n\023Get" +
+      "nseBody\022\030\n\020lastUpdatedPoint\030\002 \001(\t\"\'\n\023Get" +
       "PointRequestBody\022\020\n\010username\030\001 \001(\t\"0\n\024Ge" +
       "tPointResponseBody\022\030\n\020lastUpdatedPoint\030\001" +
       " \001(\0052\220\001\n\014PointService\022F\n\rincreasePoint\022\031" +

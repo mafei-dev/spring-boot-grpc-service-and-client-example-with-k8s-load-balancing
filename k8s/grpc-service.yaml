@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grpc-server
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: grpc-server
+  template:
+    metadata:
+      labels:
+        app: grpc-server
+    spec:
+      containers:
+        - name: grpc-server
+          image: mafeidev/grpc-spring-lb-service:1.0.0
+          ports:
+            - containerPort: 8080
+              name: spring
+            - containerPort: 9090
+              name: grpc
+          env:
+            - name: DEFAULT_ZONE
+              value: http://eureka-server-deployment-0.eureka.default.svc.cluster.local:8085/eureka
+            - name: GRPC_SERVER_PORT
+              value: "9090"
+            - name: SPRING_PROFILES_ACTIVE
+              value: k8s
+            - name: MY_NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: MY_POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grpc-server
+spec:
+  selector:
+    app: grpc-server
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      name: spring
+      port: 8080
+      targetPort: 8080
+    - name: grpc
+      port: 9090
+      targetPort: 9090
+
