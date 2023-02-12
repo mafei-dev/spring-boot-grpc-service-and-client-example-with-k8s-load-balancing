@@ -1,5 +1,5 @@
 syntax = "proto3";
-import "enums/point-type.proto";
+import "userpointservice/enums/point-type.proto";
 option java_multiple_files = true;
 option java_package = "com.example.pointservice.stub";
 
